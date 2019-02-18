@@ -77,3 +77,72 @@ body {
   }
   
 }
+
+
+
+
+.container{
+  display: block;
+  margin: 30px auto;
+  width: 100%;
+  max-wdith: 1100px;
+  text-align: center;
+}
+
+
+.ui-jqgrid
+{
+	font-size:0.8rem;
+  margin: 0 auto;
+}
+
+.ui-jqdialog{
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+}
+
+.modal-content{
+  border: 1px solid #fff;
+}
+
+// jqGrid
+.jqGridArea{
+  // 
+  #t_jqGrid{
+    text-align: left;
+    padding: 5px 10px;
+  }
+  
+  
+  // delete
+  .ui-inline-del{
+    > *{
+      color: #cd0a0a;
+      transition: opacity .3s ease;
+      &:hover{
+        opacity: .7;
+      }
+    }
+  }
+  
+  // edit
+  .ui-inline-edit{
+    > *{
+      opacity: .6;
+    }
+  }
+  
+  .table-active{
+    background-color: transparent;
+  }
+}
+
+// 日歷 gijgo js
+.input-group-append{
+  display: none;
+  > button{
+     // display: none;
+    visibility: hidden;
+  }
+}

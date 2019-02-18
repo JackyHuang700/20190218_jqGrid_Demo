@@ -19,48 +19,31 @@
     <%- include ClientApp/ejs/index_2/public/header.ejs %>
     <!-- Here is our page's main content -->
     <main id="app">
-      <!-- It contains an article -->
-      <article>
-        <h2>Article heading</h2>
+      
+      <section class="container">
+        <div class="jqGridFunction">
+          <button type="button" id="btn">取得被勾選的行</button>
+          <button type="button" id="btn2">強制勾選(取消) 第13列資料</button>
+          <button type="button" id="btn3">隱藏某欄位</button>
+          <button type="button" id="btn4">顯示某欄位</button>
+          <button type="button" id="btn5">全域搜尋</button>
+          <button type="button" id="btn6">編輯選取欄位</button>
+          <button type="button" id="btn7">新增資料</button>
+          <button type="button" id="btn8">刪除資料</button>
+          <button type="button" id="btn9">取消所有選取</button>
+        </div>
+        <div class="jqGridArea">
+            <h1>jsGrid</h1>
+            <table id="jqGrid"></table>  
+            <div id="jqGridPager"></div>
+            <span class="oi oi-person"></span>
+          
+            <hr>
+            <table id="jqGrid2"></table>
+            <div id="jqGridPager2"></div>
+        </div>
+      </section>
 
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Donec a diam
-          lectus. Set sit amet ipsum mauris. Maecenas congue ligula as quam
-          viverra nec consectetur ant hendrerit. Donec et mollis dolor. Praesent
-          et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt
-          congue enim, ut porta lorem lacinia consectetur.
-        </p>
-
-        <h3>subsection</h3>
-
-        <p>
-          Donec ut librero sed accu vehicula ultricies a non tortor. Lorem ipsum
-          dolor sit amet, consectetur adipisicing elit. Aenean ut gravida lorem.
-          Ut turpis felis, pulvinar a semper sed, adipiscing id dolor.
-        </p>
-
-        <p>
-          Pelientesque auctor nisi id magna consequat sagittis. Curabitur
-          dapibus, enim sit amet elit pharetra tincidunt feugiat nist imperdiet.
-          Ut convallis libero in urna ultrices accumsan. Donec sed odio eros.
-        </p>
-
-        <h3>Another subsection</h3>
-
-        <p>
-          Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum
-          soclis natoque penatibus et manis dis parturient montes, nascetur
-          ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem
-          facilisis semper ac in est.
-        </p>
-
-        <p>
-          Vivamus fermentum semper porta. Nunc diam velit, adipscing ut
-          tristique vitae sagittis vel odio. Maecenas convallis ullamcorper
-          ultricied. Curabitur ornare, ligula semper consectetur sagittis, nisi
-          diam iaculis velit, is fringille sem nunc vet mi.
-        </p>
-      </article>
     </main>
 
     <!-- path是相對於運行webpack的位置 -->
