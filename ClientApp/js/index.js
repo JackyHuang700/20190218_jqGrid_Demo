@@ -128,7 +128,7 @@ function commonSetting(json = {}){
         name: "Price",
         width: 80,
         sorttype: "integer",
-        editable: true
+        editable: true,
       },
       // sorttype is used only if the data is loaded locally or loadonce is set to true
       {
@@ -178,7 +178,7 @@ function commonSetting(json = {}){
     // 自定義CSS Tag
     css: '',
     // 是否要一次取全部的資料
-    loadonce: false,
+    loadonce: true,
     altRows: true,
     //rownumbers : true,
     // 多選
@@ -255,7 +255,11 @@ function commonSetting(json = {}){
       console.log("Button: "+but + " is clicked")
     },
     // 開啟可放置自定義DOM
-	  toolbar: [true,"top"], // "top", "bottom"
+    toolbar: [true,"top"], // "top", "bottom"
+    /// footer info ///
+    footerrow: true,
+    userDataOnFooter: true, // use the userData parameter of the JSON response to display data on footer
+    /// footer info ///
   }
 }
 
@@ -423,6 +427,63 @@ $(document).ready(function() {
   $("#btnMMM").click(function(){
     alert("Hi! I'm added button at this toolbar");
   });
+
+
+  // 列印， Note:     loadonce: true,，否則會無資，
+  $("#btn10").click(function(){
+
+    //
+    $(jqGridId).jqGrid("exportToHtml",{
+      includeLabels : true,
+      includeGroupHeader : true,
+      includeFooter: true,
+      autoPrint : true
+    });
+  });
+
+
+
+  // PDF， Note:     loadonce: true,，否則會無資，
+  $("#btn11").click(function(){
+    $(jqGridId).jqGrid("exportToPdf",{
+      title: 'jqGrid Export to PDF',
+      orientation: 'portrait',
+      pageSize: 'A4',
+      description: 'description of the exported document',
+      customSettings: null,
+      download: 'download',
+      includeLabels : true,
+      includeGroupHeader : true,
+      includeFooter: true,
+      fileName : "jqGridExport.pdf"
+    })
+  });
+
+
+  // Excel， Note:     loadonce: true,，否則會無資，
+  $("#btn10").click(function(){
+    $(jqGridId).jqGrid("exportToExcel",{
+      includeLabels : true,
+      includeGroupHeader : true,
+      includeFooter: true,
+      fileName : "jqGridExport.xlsx",
+      onBeforeExport : function( xlsx ) {
+        var sheet = xlsx.xl.worksheets['sheet1.xml'];
+        // Loop over the cells in column `D`
+        $('row c[r^="D"]', sheet).each( function () {
+          // Get the value and strip the non numeric characters
+          if ( $(this).text()* 1 >= 50 ) {
+            // apply style definition 20 for the cell
+            // we have 50 predefined styles
+            $(this).attr( 's', '20' );
+          }
+        });
+        alert('wait');
+      },
+      maxlength : 40 // maxlength for visible string data 
+    });
+  });
+  
 });
 
 
