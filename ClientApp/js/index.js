@@ -57,12 +57,15 @@ function showChildGrid(parentRowID, parentRowKey) {
 }
 
 // 註冊 datepacker
-function  registeDatePicker(id){
-  console.log('registeDatePicker', id)
-  console.log("#" + id + "_sdate", "#jqGrid")
-  $("#" + id + "_Quantity").datepicker({
-    uiLibrary: 'bootstrap4'
-  });
+function  formatQuantity(cellValue, options, rowObject){
+  console.log('formatQuantity')
+
+  let classStr = ''
+  if (cellValue > 50) {
+    classStr = 'warningMsg'
+  }
+
+  return (`<span class="${classStr}">${cellValue}</span>`)
 }
 
 // common setting
@@ -128,6 +131,13 @@ function commonSetting(json = {}){
         name: "Price",
         width: 80,
         sorttype: "integer",
+        formatoptions: { 
+          decimalSeparator: '.',
+          decimalPlaces: 1,
+          suffix: ' USD',
+          thousandsSeparator: ',',
+          prefix: '$',
+        },
         editable: true,
       },
       // sorttype is used only if the data is loaded locally or loadonce is set to true
@@ -136,13 +146,15 @@ function commonSetting(json = {}){
         name: "Quantity",
         width: 80,
         sorttype: "number",
-        editable: true
+        editable: true,
+        formatter: formatQuantity,
       },
       {
         label: "Enable",
         name: "Enable",
         width: 50,
         sortable: false,
+        formatter: 'checkbox',
         editable: true,
         edittype: "checkbox",
         editoptions:{
@@ -176,7 +188,7 @@ function commonSetting(json = {}){
       },
     ],
     // 自定義CSS Tag
-    css: '',
+    css: 'myJqGrid',
     // 是否要一次取全部的資料
     loadonce: true,
     altRows: true,
@@ -187,7 +199,7 @@ function commonSetting(json = {}){
     colMenu: true,
     menubar: true,
     viewrecords: true,
-    hoverrows: true,
+    hoverrows: true, // default: true， hover effect
     height: '100%', // 200 or ( 'auto', '100%' )
     // 顯示欄位數
     rowNum: 10,
@@ -245,10 +257,8 @@ function commonSetting(json = {}){
     // 點擊某列
     onSelectRow: function(id){
       console.log('onSelectRow', id)
-      // $(jqGridId).jqGrid('editRow',id,true) // 開啟某列編輯
+      $(jqGridId).jqGrid('editRow',id,true) // 開啟某列編輯
       
-      // datepicker
-      // $(jqGridId).jqGrid('editRow', id, true, registeDatePicker);
     },
     // 選取分頁
     onPaging : function(but) {
@@ -322,7 +332,7 @@ $(document).ready(function() {
   // 這行加了不知道要幹嘛
   $(jqGridId).jqGrid('inlineNav',"#jqGridPager")
   
-  // 左上角排序
+  // 左上角內的功能
   $(jqGridId).jqGrid("menubarAdd", [
     {
       id: "das",
@@ -358,10 +368,11 @@ $(document).ready(function() {
     { reloadAfterSubmit: false }, // del options
     {} // search options
   );
+  
 
   // Drag & Drop Rows
-  $(jqGridId).jqGrid("gridDnD", { connectWith: `${jqGridId2}` }) // connectWith: "#grid2,#grid3"
-  $(jqGridId2).jqGrid("gridDnD", { connectWith: `${jqGridId}` })
+  // $(jqGridId).jqGrid("gridDnD", { connectWith: `${jqGridId2}` }) // connectWith: "#grid2,#grid3"
+  // $(jqGridId2).jqGrid("gridDnD", { connectWith: `${jqGridId}` })
 
 
   /// 功能展示 ///
@@ -433,7 +444,7 @@ $(document).ready(function() {
   $("#btn10").click(function(){
 
     //
-    $(jqGridId).jqGrid("exportToHtml",{
+    $(jqGridId2).jqGrid("exportToHtml",{
       includeLabels : true,
       includeGroupHeader : true,
       includeFooter: true,
@@ -445,7 +456,7 @@ $(document).ready(function() {
 
   // PDF， Note:     loadonce: true,，否則會無資，
   $("#btn11").click(function(){
-    $(jqGridId).jqGrid("exportToPdf",{
+    $(jqGridId2).jqGrid("exportToPdf",{
       title: 'jqGrid Export to PDF',
       orientation: 'portrait',
       pageSize: 'A4',
@@ -461,8 +472,8 @@ $(document).ready(function() {
 
 
   // Excel， Note:     loadonce: true,，否則會無資，
-  $("#btn10").click(function(){
-    $(jqGridId).jqGrid("exportToExcel",{
+  $("#btn12").click(function(){
+    $(jqGridId2).jqGrid("exportToExcel",{
       includeLabels : true,
       includeGroupHeader : true,
       includeFooter: true,
@@ -483,6 +494,32 @@ $(document).ready(function() {
       maxlength : 40 // maxlength for visible string data 
     });
   });
+
+   // 儲存當前使用者瀏覽狀態
+  $("#btn13").click(function() {
+    debugger
+    $.jgrid.saveState("jqGrid")
+  });
+
+  // 還原使用者先前儲存的瀏覽狀態
+  $("#btn14").click(function() {
+    $.jgrid.loadState('jqGrid')
+  });
+
+  // 切換語言
+  $("#btn15").on('change', function(e) {
+    $.jgrid.setRegional('jqGrid',{
+      regional: e.target.value
+    });
+  });
+
+
+  // 還原使用者先前儲存的瀏覽狀態
+  $("#btn123123132").click(function() {
+
+  });
+
+
   
 });
 
